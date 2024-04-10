@@ -1,0 +1,60 @@
+name: Autograding Tests
+'on':
+- push
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Task 1.0
+      id: task-1-0
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: Task 1.0
+        setup-command: ''
+        command: make task1_0
+        input: ''
+        expected-output: All tests passed.
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Task 2.1
+      id: task-2-1
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: Task 2.1
+        setup-command: ''
+        command: make task2_1
+        input: ''
+        expected-output: All tests passed.
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Task 2.2
+      id: task-2-2
+      uses: education/autograding-io-grader@v1
+      with:
+        test-name: Task 2.2
+        setup-command: ''
+        command: make task2_2
+        input: ''
+        expected-output: All tests passed.
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: education/autograding-grading-reporter@v1
+      env:
+        TASK-1-0_RESULTS: "${{steps.task-1-0.outputs.result}}"
+        TASK-2-1_RESULTS: "${{steps.task-2-1.outputs.result}}"
+        TASK-2-2_RESULTS: "${{steps.task-2-2.outputs.result}}"
+      with:
+        runners: task-1-0,task-2-1,task-2-2
