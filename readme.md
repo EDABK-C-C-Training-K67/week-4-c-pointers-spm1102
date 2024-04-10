@@ -217,7 +217,6 @@ Pointer is a derived data type storing addresses of other variables like primiti
 - You can change the value that the pointer point to only by initialzing it another variable\:
 
   ![alt text](image-3.png)
-
   - **Usage\:** 
     - Ensure a pointer itself remains constant throughout its lifetime.
     - Create a global pointers or define constants.
@@ -225,11 +224,11 @@ Pointer is a derived data type storing addresses of other variables like primiti
 
 - For example\:
   
-  ![alt text](image-5.png)
+  ![alt text](image-4.png)
 
 - Only can change the value at the location that the pointer points to\:
 
-  ![alt text](image-6.png)
+  ![alt text](image-5.png)
 
   - **Usage\:**
     - Ensure the data pointed to by the pointer remains constant through its lifetime.
@@ -345,8 +344,7 @@ Pointer is a derived data type storing addresses of other variables like primiti
   
   int *ptr[3] = {&var1, &var2, &var3};// array of integer pointers
   ```
-  ![alt text](image-7.png)
-
+  ![alt text](image-6.png)
 - **Passing an array to a function**
 We can pass an array to a function  through reference or using equivalent pointers.
   - **Pass individual array elements\:** You can pass an individual array element to a function by using its index or pointer. For example\:
