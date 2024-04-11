@@ -3,12 +3,12 @@
 
 void reverse(int arr[], int left, int right);
 
-void real_to_bin(float num);
+void real_to_bin(double num);
 
 
 int main() {
-	float num;
-    scanf("%f", &num);
+	double num;
+    scanf("%lf", &num);
     real_to_bin(num);
 
     return 0;
@@ -23,7 +23,7 @@ void reverse(int arr[], int left, int right){
     } 
 }
 
-void real_to_bin(float num){
+void real_to_bin(double num){
     int binary[32] = {0};
     // Sign bit
     if(num > 0) {
@@ -31,7 +31,7 @@ void real_to_bin(float num){
     }
     else if(num == 0){
     	int j;
-    	for(j = 0; j < 31; j++){
+    	for(j = 0; j < 32; j++){
     		printf("%d", binary[j]);
 		}
 		return;
@@ -42,7 +42,7 @@ void real_to_bin(float num){
     }
 	
     int int_part = (int)num, i = 1; 
-    float floating_part = num - (float)int_part;
+    double floating_part = num - (double)int_part;
     int *ptr = binary;
     ptr = ptr + 8;
     while(int_part > 0){
