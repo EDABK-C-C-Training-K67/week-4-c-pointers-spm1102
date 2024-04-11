@@ -1,56 +1,78 @@
 #include <stdio.h>
-#include<math.h>
+#include <math.h>
+
+void reverse(int arr[], int left, int right);
 
 void real_to_bin(float num);
 
+
 int main() {
-    float num;
+	float num;
     scanf("%f", &num);
     real_to_bin(num);
+
     return 0;
+}
+
+void reverse(int arr[], int left, int right){
+    int temp, i;
+    for(i = 0; i < (int)((right -left) / 2 + 1); i++){
+        temp = arr[left + i];
+        arr[left + i] = arr[right -i];
+        arr[right - i] = temp;
+    } 
 }
 
 void real_to_bin(float num){
     int binary[32] = {0};
-    //sign bit
-    if(num > 0){
+    // Sign bit
+    if(num > 0) {
         binary[0] = 0;
     }
-    else{
+    else if(num == 0){
+    	int j;
+    	for(j = 0; j < 31; j++){
+    		printf("%d", binary[j]);
+		}
+		return;
+	}
+    else {
         binary[0] = 1;
         num = -num;
     }
-    //integer part and find e
-    int int_part = (int)num;
-    int e = 0;
-    while(pow(2, e) < int_part){
-        e ++;
+	
+    int int_part = (int)num, i = 1; 
+    float floating_part = num - (float)int_part;
+    int *ptr = binary;
+    ptr = ptr + 8;
+    while(int_part > 0){
+        *(ptr + i++) = int_part % 2;
+        int_part /= 2;
     }
-    e = e + 127 - 1;
-    //assign e to the array
-    int temp = e;
-    for(int i = 1; i <= 8; i++){
-        if(temp > pow(2, 8 - i)){
-            binary[i] = 1;
-            temp -= pow(2, 8 - i);
+    int cnt = i;
+    reverse(binary, 8, 8 + i - 1 );
+
+    while(floating_part > 0){
+        floating_part *= 2;
+        if(floating_part < 1){
+            *(ptr + i++ - 1) = 0;
         }
         else{
-            binary[i] = 0;
+            *(ptr + i++ -1) = 1;
+            floating_part -= 1;
         }
     }
-    //floating part
-    float floating_part = (float)(num / pow(2, e - 127) - 1);
-    for(int i = 9; i < 32; i++){
-		floating_part *= 2 ;
-		if(floating_part < 1){
-			binary[i] = 0;
-		}
-		else {
-			binary[i] = 1;
-			floating_part -= 1 ;
-		}
-	}
-    for(int i = 0; i < 32; i++){
+
+    
+    int e = 127 + 7 -2;
+    i = 1;
+    while(e > 0){
+        binary[i++] = e % 2;
+        e /= 2;
+    }
+    reverse(binary, 1, 8);
+    
+    for(i = 0; i < 32; i++){
         printf("%d", binary[i]);
     }
 }
