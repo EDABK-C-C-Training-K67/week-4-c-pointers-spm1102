@@ -64,7 +64,7 @@ void real_to_bin(float num){
     }
 
     
-    int e = 127 + 7 -2;
+    int e = 127 + cnt - 2;
     i = 1;
     while(e > 0){
         binary[i++] = e % 2;
