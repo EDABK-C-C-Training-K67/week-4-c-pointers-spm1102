@@ -58,37 +58,37 @@ Pointer is a derived data type storing addresses of other variables like primiti
   - **Syntax of pointer in C\:**
     `datatype *pointerName;`
     Example\:
-    ` int *ptr; //a integer pointer called ptr`
-    `char *ptr; //a pointer called ptr having char data type`
+    ` int* ptr; //a integer pointer called ptr`
+    `char* ptr; //a pointer called ptr having char data type`
 - **Data type\:**
   The data type of a pointer depends on the types of data it points to.
   Example\:
   ```c
-  int *ptr;// Pointer to integers
-  char *ptr; //Pointer to characters
-  float *ptr;//Pointer to Floating-point numbers
-  struct *ptr;// Pointer to stuctures
-  int **ptr;// Pointer to pointers
-  void *ptr;// Void pointer
+  int* ptr;// Pointer to integers
+  char* ptr; //Pointer to characters
+  float* ptr;//Pointer to Floating-point numbers
+  struct* ptr;// Pointer to stuctures
+  int** ptr;// Pointer to pointers
+  void* ptr;// Void pointer
   int (*ptr)(int, int);// Function pointer
   ```
 - **Pointer Initialization\:** is the process where we assign some initial value to the pointer variable. We generally use the `&` address-of operatir to get the memory address of a variable and then store it in the pointer variable.
   - Example\:
     ```c
     int var =10;
-    int *ptr;
+    int* ptr;
     ptr = &var;
     ```
   - We can also declare and initialize the pointer in a single step, following the method called pointer definition.
     - Example\:
     ```c
-    int *ptr = &var;
+    int* ptr = &var;
     ```
 - **Pointer dereferencing**
   Dereferencing a pointer is the process of accessing the value stored in the memory address specified in the pointer. We use the same `*` dereferencing operator that we used in the pointer declaration.
     ```c
     int a = 10;
-    int *p = &a;
+    int* p = &a;
     printf("Value of a: %d\n",a);           // a = 10
     printf("Value p point to: %d\n", *p);   // *p  = 10
     printf("Value of p: %p\n", p);          // p = &a
@@ -107,20 +107,20 @@ Pointer is a derived data type storing addresses of other variables like primiti
    - Pointers can be assigned values (memory addresses) using the assignment operator `=` or the address-of operator `&`.
         ```c
         int a = 10;
-        int *p1 = &a; // Assigns the address of num1 to p1
-        int *p2 = *p1;// Assigns the value of p1(address of a) to p2
+        int* p1 = &a; // Assigns the address of num1 to p1
+        int* p2 = p1;// Assigns the value of p1(address of a) to p2
         ```
 ## 2. Comparison
    -  Pointers can be compared using relational operators\: `==`, `!=`, `<`, `>`, `<=`, `>=`.
-   -  Pointer can compare with `0` or `NULL`to check if it points to a valid memory location or not.
+   -  Pointer can compare with `0` or `NULL`to check if it points to a valid memory location or not. However, checking ONLY with `NULL` because we need to avoid magic number.
         ```c
         //Pointer compare with '0' 
-        int *ptr = 0;
-        if(ptr == 0){
-            printf("Pointer is 0\n");
+        int* ptr = NULL;
+        if(ptr == NULL){
+            printf("Pointer is NULL\n");
         }
         else{
-            printf("Pointer is not 0");
+            printf("Pointer is not NULL");
         }
         ```
 
@@ -129,29 +129,30 @@ Pointer is a derived data type storing addresses of other variables like primiti
         //Pointer compare with pointer
         int num1 = 10;
         int num2 = 20;
-        int *p1 = &num1;
-        int *p2 = & num2;
+        int* p1 = &num1;
+        int* p2 = & num2;
         if(p1 < p2){
-            printf("num1 is smaller than num2");
+            printf("the address of num1 is smaller than that of num2");
         }
 
         //Pointer compare with a specified address
         int a = 10, b = 15;
-        int *ptr = &a;
-        if()
+        int* ptr = &a;
+        if(ptr < &b)
+          printf("The address of a is smaller than that of b");
         ```
 ## 3. Arithmetic opertions
 - Pointers can be manipulated using arithmetic operations such as addition, subtraction, and increment/decrement. This is particularly useful when dealing with arrays.
 - The nature of increment/decrement of pointer is to move the pointer to the next or the previous address
     ```c
     int arr[5] = {1, 2, 5, 7, 6};
-    int *p = arr; //Pointer p points to the 1st element of arr
-    p ++;  // Moves p to the next element
-    int nextElement = *p + 2;
-    int thirdElement = *(p+2);// retrieves the value of the third element 
-                              //of arr using pointer arithmetic
-    printf("%d", nextElement); // nextElement = 4
-    printf("\n%d", thirdElement); // thirdElement = 7
+    int* p = arr; //Pointer p points to the 1st element of arr
+    p++;  // Moves p to the next element
+    int nextElement = *p;
+    int valThirdElement = *(p+1); // retrieves the value of the third element 
+                                  //of arr using pointer arithmetic
+    printf("%d", nextElement);    // nextElement = 2
+    printf("\n%d", thirdElement); // thirdElement = 5
     ```
 - The nature of adding an data type n to a pointer is to move the pointer to an address which is far from the initial address a distance of `sizeof(datatype) * n` bytes. This principle is also true for subtraction.
 - For example, `*ptr` is an integer pointer that stores 1000 as an address. If we add integer 5 to it using the expression, `ptr = ptr + 5`, then, the final address stored in the ptr will be `ptr = 1000 + sizeof(int) * 5 = 1020`.
@@ -163,8 +164,8 @@ Pointer is a derived data type storing addresses of other variables like primiti
         
     int main(){
         int x = 6, N = 4;
-        int *ptr1 = &N;// Initialize ptr1 storing address of N
-        int *ptr2 = &x;// Initialize ptr2 stoging address of x
+        int* ptr1 = &N;// Initialize ptr1 storing address of N
+        int* ptr2 = &x;// Initialize ptr2 stoging address of x
         x = ptr1 - ptr2;
         printf("%d", x); // Subtraction of ptr1 and ptr2 is 1
         return 0;
@@ -177,16 +178,17 @@ Pointer is a derived data type storing addresses of other variables like primiti
 
     int main(){
         int arr[5] = {1, 2, 3, 4, 5};
-        void *ptr = arr // void pointer point to arr[0]
+        void* ptr = arr // void pointer point to arr[0]
 
-        int *intPtr = (int*)ptr// convert ptr into intPtr having integer data type
+        int* intPtr = (int*)ptr// convert ptr into intPtr having integer data type
 
-        intPtr ++;// Move the intPtr to the next element
+        intPtr++;// Move the intPtr to the next element
 
         printf("%d", *intPtr); //print out value of the next element
         return 0;
     }
     ```
+  - **NOTE\:** When we use type coercion for a pointer, just *the way the machine read it* changes, not the value that the pointer points to changes.
 - **Operations with function pointer\:** We can not directly aplpy arithmetic operations to function pointer, but we can still effectively work with them by using other means, such as loops and indexing. For example\:
     ```c
     #include<stdio.h>
@@ -224,8 +226,7 @@ Pointer is a derived data type storing addresses of other variables like primiti
 
 - For example\:
   
-  ![alt text](image-4.png)
-
+  ![alt text](image-7.png)
 - Only can change the value at the location that the pointer points to\:
 
   ![alt text](image-5.png)
@@ -238,7 +239,7 @@ Pointer is a derived data type storing addresses of other variables like primiti
   
   ```c
   const int value = 10;
-  const int *const ptr = &value;
+  const int* const ptr = &value;
   
   printf("Address of value: %p\n", &value);
   printf("Address ptr point to: %p\n",ptr);
@@ -280,17 +281,17 @@ Pointer is a derived data type storing addresses of other variables like primiti
 - However, we can not **directly** use increment or decrement with an array name because array name is a constant address. We can only use those operations with an equivalent pointer pointing the 1st element of the array.
     ```c
     int arr[5] = {1, 2, 3, 4, 5};
-    int *ptr = arr;
+    int* ptr = arr;
     printf("%d\n", *ptr);// arr[0]
-    ptr ++;
+    ptr++;
     printf("%d\n", *ptr);//arr[1]
     ``` 
 - **NOTE\:** 
   - For `arr[-2]` and `-2[a]`, these two commands are **undefined**. Both expressios are attempting to access memory locations outside the bounds of the array arr, which results in undefined behavior.
   - **Difference between `arr` , `&arr` and `&a[0]`\:**
-      Consider the case, `arr` is an array of type `int`.  Therefore, `&arr` is a pointer-to-array of type `int` and `&arr[0]` is a pointer to the 1st element of array arr. Besides, although `arr` and `&a[0]` have the same address pf the 1st element of array but they have different types:
-        - `arr` is of type "array of `int` "
-        - `&a[0]` is of type "pointer to `int` "
+    - `arr` is a constant pointer
+    - `&arr` is a pointer-to-array of type `int` which points to the whole array.
+    - `&arr[0]` is a pointer to the 1st element of array arr. 
 ### b. Pointer to an array
 - Pointer to an array is pointer that point to the whole array. This pointer is useful when talking about multidimensional arrays. 
      ```c
@@ -298,12 +299,12 @@ Pointer is a derived data type storing addresses of other variables like primiti
     
     int main(){
     int arr[5] = {1, 2, 3, 4, 5};
-    int *p;// Pointer to an integer
+    int* p;// Pointer to an integer
     int (*ptr)[5];//Pointer to an array of 5 integers
     p = arr;// Point to element index 0 of the array
     ptr = &arr;//Point to the whole array
         printf("%p %p",p,ptr);//p = 00000003DADFFBC0, 
-                              //ptr =00000003DADFFBC0;
+                              //ptr = 00000003DADFFBC0;
       
     p++;
     ptr++;
@@ -342,7 +343,7 @@ Pointer is a derived data type storing addresses of other variables like primiti
   int var2 = 20;
   int var2 = 30;
   
-  int *ptr[3] = {&var1, &var2, &var3};// array of integer pointers
+  int* ptr[3] = {&var1, &var2, &var3};// array of integer pointers
   ```
   ![alt text](image-6.png)
 - **Passing an array to a function**
@@ -354,11 +355,11 @@ We can pass an array to a function  through reference or using equivalent pointe
     // function using index 
     void display(int num);
     //function using pointer
-    void printArray(int *ptr);
+    void printArray(int* ptr);
 
     int main(){
       int num[] = {1, 2, 3, 4, 5};
-      int *ptr = num;
+      int* ptr = num;
 
       display(num[2]);
 
@@ -370,7 +371,7 @@ We can pass an array to a function  through reference or using equivalent pointe
       printf("%d\n", num);
     }
 
-    void printArray(int *ptr){
+    void printArray(int* ptr){
       printf("%d ", *ptr );
     }
     ```
@@ -379,33 +380,33 @@ We can pass an array to a function  through reference or using equivalent pointe
     #include<stdio.h>
 
     // using array index
-    void printArray(int arr[]);
+    void printArray(int arr[], int num);
     // using array of pointers
-    int sum(int *ptr[]);
+    int sum(int *ptr[], int num);
 
     int main() {
         int arr[] = {1, 2, 3, 4, 5};
-        int *ptr[5]; // Array of pointers to integers
+        int* ptr[5]; // Array of pointers to integers
         for(int i = 0; i < 5; i++) {
             ptr[i] = &arr[i];
         }
 
-        printArray(arr); 
+        printArray(arr, 5); 
 
-        printf("\n%d", sum(ptr)); 
+        printf("\n%d", sum(ptr, 5)); 
 
         return 0;
     }
 
-    void printArray(int arr[]) {
-        for(int i = 0; i < 5; i++) {
+    void printArray(int arr[], int num) {
+        for(int i = 0; i < num; i++) {
             printf("%d \n", arr[i]);
         }
     }
 
-    int sum(int *ptr[]) {
+    int sum(int *ptr[], int num) {
             int s = 0;
-            for(int i = 0; i < 5; i++) {
+            for(int i = 0; i < num; i++) {
                 s += *ptr[i];
             }
             return s;
@@ -424,7 +425,7 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
 
     ```c
     char str[5] = "abcde"// wrong
-    char str[5] = "abcde"// correct
+    char str[6] = "abcde"// correct
     ```
   - After declaration, if we want to assign some other text to the string, we have to assign it one by one or use the built-in `strcpy()` function because the direct assignment of the string literal to character array is only possible in declaration.
     ```c
@@ -648,12 +649,12 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
 
   void print_array(int *arr, int n);
 
-  void add_element(int *a, int n, int val, int pos);
+  void add_element(int *a, int* n, int val, int pos);
 
-  void delete_element(int *a, int n, int pos);
+  void delete_element(int *a, int* n, int pos);
 
   int main(){
-      int *arr;
+      int* arr;
       int n;
       scanf("%d", &n);
       arr = (int *)malloc(n * sizeof(int));
@@ -673,28 +674,28 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
       return 0;
   }
 
-  void scan_array(int *arr, int n){
+  void scan_array(int* arr, int n){
       for(int i = 0; i < n; i++){
           printf("\narr[%d] = ",i);
           scanf("%d", (arr + i));
       }
   }
-  void print_array(int *arr, int n){
+  void print_array(int* arr, int n){
       for(int i = 0; i < n; i++){
           printf("\narr[%d] = %d", i, *(arr + i));
       }
   }
-  void add_element(int *a, int n, int val, int pos){
-      a = (int *)realloc(a, (n + 1) * sizeof(int));
+  void add_element(int* a, int* n, int val, int pos){
+      a = (int *)realloc(a, (*n + 1) * sizeof(int));
       // choose the place to extent
       if(pos < 0){
           pos = 0;// at the begin of the array
       }
-      else if(pos > n){
-          pos = n;// at the end of the array
+      else if(pos > *n){
+          pos = *n;// at the end of the array
       }
       //move the array before add new value
-      for (int i = n; i > pos; i--){
+      for (int i = *n; i > pos; i--){
           *(a + i) = *(a + i - 1);
       }
       //add val at pos
@@ -702,22 +703,22 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
       //Increase the number of elements after adding val
       ++n;
   }
-  void delete_element(int *a, int n, int pos){
-      if(n <= 0){
+  void delete_element(int* a, int* n, int pos){
+      if(*n <= 0){
           return;
       }
       if(pos <= 0){
           pos = 0;
       }
       else if(pos >= n){
-          pos = n - 1;
+          pos = *n - 1;
       }
       //Move the array after delete
-      for(int i = pos; i < n; i++){
+      for(int i = pos; i < *n; i++){
           *(a + i) = *(a + i +1);
       }
       //reallocate the memory
-      a = (int *)realloc(a, (n-1) * sizeof(int));
+      a = (int*)realloc(a, (*n-1) * sizeof(int));
       //decrease the number of elements after deleting.
       --n;
   }
@@ -727,7 +728,7 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
 1. **Using 2nd-level pointer**
 - When we want to allocate memory for a two-dimensional array by using double pointer, we have to allocate memories for  an array of pointers(rows), and then for each row individually.
   ```c
-  a = (int **)malloc(row * sizeof(int));
+  a = (int**)malloc(row * sizeof(int));
   for(int i = 0; i < row; i++){
     a[i] = (int*)malloc(col * sizeof(int));
   }
@@ -746,17 +747,17 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
   #include<stdio.h>
   #include<stdlib.h>
 
-  void scan_matrix(int **arr, int row, int col);
+  void scan_matrix(int** arr, int row, int col);
 
-  void print_matrix(int **arr, int row, int col);
+  void print_matrix(int** arr, int row, int col);
 
   int main(){
-      int **arr = NULL, row, col;
+      int** arr = NULL, row, col;
       scanf("%d%d", &row, &col);
 
-      arr = (int **)calloc(row, sizeof(int));
+      arr = (int**)calloc(row, sizeof(int));
       for(int i = 0; i < row; i++){
-          arr[i] = (int *)calloc(col, sizeof(int));
+          arr[i] = (int*)calloc(col, sizeof(int));
       }
 
       scan_matrix(arr, row, col);
@@ -769,7 +770,7 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
       return 0;
   }
 
-  void scan_matrix(int **arr, int row, int col){
+  void scan_matrix(int** arr, int row, int col){
       for(int i = 0; i < row; i++){
           for(int j = 0; j < col; j++){
               printf("\na[%d][%d] = ", i, j);
@@ -778,7 +779,7 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
       }
   }
 
-  void print_matrix(int **arr, int row, int col){
+  void print_matrix(int** arr, int row, int col){
       for(int i = 0; i < row; i++){
           for(int j = 0; j < col; j++){
               printf("%d ", arr[i][j]);
@@ -794,15 +795,15 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
   #include<stdio.h>
   #include<stdlib.h>
 
-  void scan_matrix(int *arr, int row, int col);
+  void scan_matrix(int* arr, int row, int col);
 
-  void print_matrix(int *arr, int row, int col);
+  void print_matrix(int* arr, int row, int col);
 
   int main(){
-      int *arr = NULL, row, col;
+      int* arr = NULL, row, col;
       scanf("%d%d", &row, &col);
 
-      arr = (int *)calloc(row * col, sizeof(int));
+      arr = (int*)calloc(row * col, sizeof(int));
       
       scan_matrix(arr, row, col);
       print_matrix(arr, row, col);
@@ -811,7 +812,7 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
       return 0;
   }
 
-  void scan_matrix(int *arr, int row, int col){
+  void scan_matrix(int* arr, int row, int col){
       for(int i = 0; i < row; i++){
           for(int j = 0; j < col; j++){
               printf("\narr[%d][%d] = ", i, j);
@@ -869,17 +870,17 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
   ```c
   #include<stdio.h>
   //const function pointer
-  void print_array(const int *arr, int length);
+  void print_array(const int* arr, int length);
 
   int main(){
     int arr[] = {1, 2, 3, 4, 5};
-    int length = sizeof(arr) / sizeof(int);
+    int length = (int)((int*)(&arr + 1) - (int*)(&arr));
 
     print_array(arr, length);
     return 0;
   }
 
-  void print_array(const int *arr, int length){
+  void print_array(const int* arr, int length){
     for(int i = 0; i < length; i++){
       printf("\n%d ", *(arr + i));
     }
@@ -917,15 +918,14 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
 
   ```c
   #include<stdio.h>
-  void setToNull(int **ptr)	
-  {
+  void setToNull(int** ptr)	{
     *ptr = NULL;
   }
 
   int main()
   {
     int value = 5;
-    int *pValue = &value;
+    int* pValue = &value;
     
     printf("\npValue point to: %x", (void*)pValue);
 
@@ -1002,7 +1002,7 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
         printf("\narr[%d] = %d ", i, (*ptr_to_arr)[i]);
       }
 
-      int *arr_of_ptr[10];
+      int* arr_of_ptr[10];
       for(int i = 0; i < 10; i++){
         arr_of_ptr[i] = &arr[i];
         printf("\narr[%d] = %d", i, *(arr_of_ptr[i]));
@@ -1020,11 +1020,11 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
 
   int main(){
     int num = 100;
-    int *ptr1 = &num;      // ptr1 points to num
-    int **ptr2 = &ptr1;    //ptr2 points to ptr1
-    int ***ptr3 = &ptr2;  //ptr3 points to ptr2
-    int ****ptr4 = &ptr3; //ptr4 points to ptr3
-    int *****ptr5 = &ptr4;//ptr5 points to ptr4
+    int* ptr1 = &num;      // ptr1 points to num
+    int** ptr2 = &ptr1;    //ptr2 points to ptr1
+    int*** ptr3 = &ptr2;  //ptr3 points to ptr2
+    int**** ptr4 = &ptr3; //ptr4 points to ptr3
+    int***** ptr5 = &ptr4;//ptr5 points to ptr4
     /* printing the address and values of pointers */
     printf("&ptr1: 0x%x\tptr1: 0x%x\t", &ptr1, ptr1);
     printf("*ptr1    : %d\n", *ptr1);
@@ -1052,10 +1052,10 @@ A 2D array is the simplest form of the multidimensional array. Its nature is an 
       Multi-level pointers are often used when we allocate memory for a 2D array dynamically.
 
       ```c
-      int **matrix;
-      matrix = (int **)malloc(row * sizeof(int *));
+      int** matrix;
+      matrix = (int**)malloc(row * sizeof(int *));
       for(int i = 0; i< row; i++){
-        matrix[i] = (int *)malloc(cols * sizeof(int));
+        matrix[i] = (int*)malloc(cols * sizeof(int));
       }
 
       for(int i = 0; i < row; i++){
